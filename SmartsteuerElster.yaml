@@ -1,0 +1,86 @@
+# Be aware that YAML has indentation based scoping.
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Elster USTVA
+  description: |
+    #### Describes the existing Elster API for USTVA
+schemes:
+  - http
+host: ustva.smartsteuer.de
+basePath: /elster/v1
+paths:
+  /ustva:
+    post:
+      # Describe this verb here. Note: you can use markdown
+      description: |
+        Sends USTVA data to the tax office.
+      produces:
+        - application/x-www-form-urlencoded
+      responses:
+        200:
+          description: data send successfully
+      parameters:
+        - name: finanzamt
+          in: formData
+          description: number of tax office
+          type: string
+        - name: test
+          in: formData
+          description: true or false for testing purposes
+          type: boolean
+        - name: datenlieferant
+          in: formData
+          description: xml structure containing information about the sender (Haufe)
+          type: string
+        - name: xml
+          in: formData
+          description: ustva data as xml
+          type: string
+        - name: zmdoDatenlieferant
+          in: formData
+          description: tring containing information about the sender (Haufe)
+          type: string
+        - name: zmdoXml
+          in: formData
+          description: zmdo data as xml
+          type: string
+  /ustva2:
+    post:
+      # Describe this verb here. Note: you can use markdown
+      description: |
+        Sends USTVA data to the tax office.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: data send successfully
+      parameters:
+        - name: ustva
+          in: body
+          description: ustva data
+          schema:
+            $ref: "#/definitions/ustvaData"
+
+definitions:
+  ustvaData:
+    type: object
+    properties:
+      finanzamt:
+        type: string
+        description: code for tax office
+      test:
+        type: boolean
+        description: use true for test purposes
+      datenlieferant:
+        type: string
+        description: xml structure containing information about the sender (Haufe)
+      xml:
+        type: string
+        description: ustva data as xml
+      zmdoDatenlieferant:
+        type: string
+        description: string containing information about the sender (Haufe)
+      zmdoXml:
+        type: string
+        description: zdmdo xml data
