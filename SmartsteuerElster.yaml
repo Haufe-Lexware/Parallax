@@ -6,17 +6,25 @@ info:
   description: |
     #### Describes the existing Elster API for USTVA
 schemes:
-  - http
+  - https
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication. Works over `HTTP` and `HTTPS`
+# https://lexoffice:ustvapass@ustva.smartsteuer.de
 host: ustva.smartsteuer.de
-basePath: /elster/v1
 paths:
   /ustva:
     post:
       # Describe this verb here. Note: you can use markdown
       description: |
         Sends USTVA data to the tax office.
-      produces:
+      security:
+       - basicAuth: []
+      consumes:
         - application/x-www-form-urlencoded
+      produces:
+        - application/json
       responses:
         200:
           description: data send successfully
@@ -45,11 +53,15 @@ paths:
           in: formData
           description: zmdo data as xml
           type: string
-  /ustva2:
+  /ust:
     post:
       # Describe this verb here. Note: you can use markdown
       description: |
         Sends USTVA data to the tax office.
+      security:
+       - basicAuth: []
+      consumes:
+        - application/x-www-form-urlencoded
       produces:
         - application/json
       responses:
